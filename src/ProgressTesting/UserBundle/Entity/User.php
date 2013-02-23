@@ -5,6 +5,7 @@ namespace ProgressTesting\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ProgressTesting\UserBundle\Entity\User
@@ -46,10 +47,24 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $isActive;
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
+     *
+     */
+    private $groups;
+
+
+    public function getRoles()
+    {
+        return $this->groups->toArray();
+    }
+
     public function __construct()
     {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
+        $this->groups = new ArrayCollection();
     }
 
     public function isAccountNonExpired()
@@ -94,14 +109,6 @@ class User implements AdvancedUserInterface, \Serializable
     public function getPassword()
     {
         return $this->password;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getRoles()
-    {
-        return array('ROLE_USER');
     }
 
     /**
@@ -232,5 +239,38 @@ class User implements AdvancedUserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Add groups
+     *
+     * @param \ProgressTesting\UserBundle\Entity\Group $groups
+     * @return User
+     */
+    public function addGroup(\ProgressTesting\UserBundle\Entity\Group $groups)
+    {
+        $this->groups[] = $groups;
+    
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \ProgressTesting\UserBundle\Entity\Group $groups
+     */
+    public function removeGroup(\ProgressTesting\UserBundle\Entity\Group $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }
