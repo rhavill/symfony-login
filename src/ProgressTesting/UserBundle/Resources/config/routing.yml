@@ -1,0 +1,4 @@
+progress_testing_user:
+    resource: "@ProgressTestingUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
