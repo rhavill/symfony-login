@@ -18,6 +18,12 @@ security:
             entity: { class: ProgressTestingUserBundle:User }
 
     firewalls:
+        main:
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
         admin_area:
             pattern:    ^/admin
             http_basic: ~
