@@ -15,7 +15,7 @@ security:
 
     providers:
         administrators:
-            entity: { class: ProgressTestingUserBundle:User, property: username }
+            entity: { class: ProgressTestingUserBundle:User }
 
     firewalls:
         admin_area:
