@@ -38,6 +38,11 @@ security:
                 #handlers: [some.service.id, another.service.id]
                 #success_handler: some.service.id
             anonymous: ~
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
 
             #http_basic: ~
             #anonymous: ~
