@@ -28,6 +28,16 @@ security:
             form_login:
                 login_path:  /admin/login
                 check_path:  /admin/login_check
+            logout:
+                path:   /admin/logout
+                target: /admin/login
+                #invalidate_session: false
+                #delete_cookies:
+                #    a: { path: null, domain: null }
+                #    b: { path: null, domain: null }
+                #handlers: [some.service.id, another.service.id]
+                #success_handler: some.service.id
+            anonymous: ~
 
             #http_basic: ~
             #anonymous: ~

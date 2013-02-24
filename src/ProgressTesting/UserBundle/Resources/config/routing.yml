@@ -9,3 +9,5 @@ login:
 login_check:
     pattern:   /admin/login_check
     # no need to implement controller, because this route is handled by firewall.
+logout:
+    pattern:   /admin/logout    
