@@ -2,3 +2,10 @@ progress_testing_user:
     resource: "@ProgressTestingUserBundle/Controller/"
     type:     annotation
     prefix:   /
+
+login:
+    pattern:   /admin/login
+    defaults:  { _controller:ProgressTestingUserBundle:User:login }
+login_check:
+    pattern:   /admin/login_check
+    # no need to implement controller, because this route is handled by firewall.

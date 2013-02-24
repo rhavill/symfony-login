@@ -18,14 +18,24 @@ security:
             entity: { class: ProgressTestingUserBundle:User }
 
     firewalls:
+        login_firewall:
+            pattern:    ^/admin/login$
+            anonymous:  ~
         admin_area:
             pattern:    ^/admin
-            http_basic: ~
+            #anonymous: ~
+            # login_path and check_path must be a subdirectory of pattern
+            form_login:
+                login_path:  /admin/login
+                check_path:  /admin/login_check
+
+            #http_basic: ~
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
 
     access_control:
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
         
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
