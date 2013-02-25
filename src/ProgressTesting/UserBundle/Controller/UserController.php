@@ -31,4 +31,26 @@ class UserController extends Controller
             )
         );
     }
+
+    public function createAction()
+    {
+        $factory = $this->get('security.encoder_factory');
+        //$user = new Acme\UserBundle\Entity\User();
+        $user = new User();
+
+        $user->setPassword('password');
+        $encoder = $factory->getEncoder($user);
+        $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+        $user->setPassword($password);
+
+        $user->setUsername('tester');
+        $user->setEmail('tester@gmail.com');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return new Response('Created user id '.$user->getId());
+    }
+
 }
